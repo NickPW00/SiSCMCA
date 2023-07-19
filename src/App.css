@@ -1,0 +1,99 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+header{
+    background-color: #ddd;
+}
+
+main > div{
+    margin: 10px;
+}
+
+.estatistica{
+    padding: 10px;
+    background-color: #d0d0d0;
+}
+
+h2{
+    font-size: clamp(1.4rem, 3.5vw, 2rem)
+}
+
+.estatistica__item{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-block: 10px;
+}
+
+.estatistica__describe, .historico__describe{
+    font-size: clamp(1.2rem, 3.5vw, 1.7rem)
+}
+
+.estatistica__bar{
+    background-color: rgb(61, 61, 61);
+    width: 90vw;
+    height: 6vh;
+}
+
+.estatistica__progress{
+    background-color: rgb(175, 175, 175);
+    transition: 0.4s;
+    height: 6vh;
+}
+
+.progress1{
+    width:80%
+}
+
+.progress2{
+    width: 30%;
+}
+
+.historico__itens{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.historico__item{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: #d0d0d0 solid 2px;
+}
+
+.historico__container{
+    width: 80%;
+}
+
+.historico__card{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 2vh 0;
+    background-color: #ccc;
+}
+
+.bigLetter{
+    font-size: 5vw;
+}
+
+.red{color: red;}
+.green{color: rgb(0, 168, 0)}
+
+p{
+    font-size: clamp(0.5rem, 3vw, 1rem);
+}
+
+.title{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.title img{
+    width: clamp(1rem, 4vw, 1.4rem);
+}
