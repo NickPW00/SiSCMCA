@@ -66,7 +66,8 @@ h2{
 }
 
 .historico__container{
-    width: 80%;
+    /* Retirar quando utilizar a API */
+    width: 90%;
 }
 
 .historico__card{
@@ -78,14 +79,14 @@ h2{
 }
 
 .bigLetter{
-    font-size: 5vw;
+    font-size: 1.3rem;
 }
 
 .red{color: red;}
 .green{color: rgb(0, 168, 0)}
 
 p{
-    font-size: clamp(0.5rem, 3vw, 1rem);
+    font-size: clamp(0.8rem, 3vw, 1rem);
 }
 
 .title{
@@ -96,4 +97,10 @@ p{
 
 .title img{
     width: clamp(1rem, 4vw, 1.4rem);
+}
+
+@media (min-width: 400px) {
+    .bigLetter{
+        font-size: 5vw;
+    }
 }
