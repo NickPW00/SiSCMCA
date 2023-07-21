@@ -1,0 +1,28 @@
+[
+    {
+        "id": 1,
+        "nome": "Caixa 1",
+        "capacidade": 500,
+        "volumeInicial": 0,
+        "medida": "Litros",
+        "historico": [
+            {
+                "mudanca": 10,
+                "data": "11/7/2023"
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "nome": "Caixa 2",
+        "capacidade": 300,
+        "volumeInicial": 20,
+        "medida": "Litros",
+        "historico": [
+            {
+                "mudanca": 20,
+                "data": "11/7/2023"
+            }
+        ]
+    }
+]

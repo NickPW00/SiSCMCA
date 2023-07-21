@@ -11,19 +11,21 @@ function Estatistica() {
                     <img src="./img/icons8-plus.svg" alt=""/>
                 </div>
             </div>
-            <EstatisticaBarra numCaixa='Caixa 1'/>
-            <EstatisticaBarra numCaixa='Caixa 2'/>
+            <EstatisticaBarra 
+                numCaixa='Caixa 1'
+                porcentagem={70} 
+            />
         </div>
     )
 }
 
 function EstatisticaBarra(props) {
-    
+    const porcentagem = {"width": props.porcentagem + "%"}
     return (
         <div className="estatistica__item">
             <p className="estatistica__describe">{props.numCaixa}</p>
             <div className="estatistica__bar">
-                <div className="estatistica__progress progress1"></div>
+                <div className="estatistica__progress" style={porcentagem}></div>
             </div>
         </div>
     )
@@ -34,13 +36,14 @@ function Historico() {
         <div className="historico">
             <h2>Histórico</h2>
             <div className="historico__itens">
-                <ItemHistorico numCaixa='Caixa 1'/>
-                <ItemHistorico numCaixa='Caixa 2'/>
+                <ItemHistorico nomeCaixa='Caixa 1' numCaixa={0} />
+                <ItemHistorico nomeCaixa='Caixa 2' numCaixa={1} />
             </div>
         </div>
     )
 }
 
+// Aqui ocorrerá o fetch, porém, só sobre a quantidade de Caixas
 function ItemHistorico(props) {
     const estiloCaixa = {
                         "width": "100%",
@@ -50,42 +53,82 @@ function ItemHistorico(props) {
         <div className="historico__item">
             <div style={estiloCaixa}>
                 <div className="title">
-                    <p className="historico__describe">{props.numCaixa}</p>
+                    <p className="historico__describe">{props.nomeCaixa}</p>
                     <div className="title">
                         <img src="./img/icons8-edit.svg" alt=""/>
                         <img src="./img/icons8-plus.svg" alt=""/>
                     </div>
                 </div>
             </div>
-            <ContainerHistorico />
+            <ContainerHistorico numCaixa={props.numCaixa} />
         </div>
     )
 }
 
-function ContainerHistorico() {
-    return (
-        <div className="historico__container">
-            <CardHistorico color="green"/>
-            <CardHistorico color="red"/>
-        </div>
-    )
+// Aqui que ocorrerá o fetch.
+class ContainerHistorico extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            historico: null,
+            capacidade: null
+        }
+    }
+
+    componentDidMount() {
+        let numCaixa = this.props.numCaixa
+        fetch("/dados/dades.json")
+            .then(response => response.json())
+            .then(data => {
+                this.setState({
+                historico: data[numCaixa].historico,
+                capacidade: data[numCaixa].capacidade
+                })
+            }
+            )
+    }
+
+    render() {
+        const { historico, capacidade } = this.state
+        historico === null ? console.log('a') : console.log(historico)
+        return (
+            <div className="historico__container">
+                {historico === null ?
+                <div>Carregando...</div> : 
+                historico.map(({ mudanca , data }) => (
+                    <CardHistorico 
+                    color={mudanca > 0 ? "green" : "red"}
+                    porcentagemCard={((mudanca / capacidade)*100).toFixed(2) + '%'}
+                    mudanca={mudanca + " litros"}
+                    data={data}/> 
+                ))}
+            </div>
+        )
+    }
 }
 
 
-function CardHistorico(props) {
+function CardHistorico({porcentagemCard, mudanca, data, color}) {
     return (
         <div className="historico__card"> 
                 <div className="card">
-                    <p className={"bigLetter " + props.color}>5,27%</p>
-                    <p className={props.color}>5 Litros</p>
+                    <p className={"bigLetter " + color}>{porcentagemCard}</p>
+                    <p className={color}>{mudanca}</p>
                 </div>
                 <div className="card">
-                    <p>20/10/2022</p>
-                    <p>11:34</p>
+                    <p>{data}</p>
+                    <p>Por enquanto vazio</p>
                 </div>
             </div>
     )
 }
+
+function chamada() {
+    fetch("/dados/dades.json")
+        .then(response => response.json())
+        .then(data => {return data})
+}
+
 
 export default function App() {
     return (
