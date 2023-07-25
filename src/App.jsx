@@ -1,7 +1,7 @@
 import React from 'react'
 import './App.css'
 
-function Estatistica() {
+/* function Estatistica() {
     return (
         <div className="estatistica">
             <div className="title">
@@ -17,6 +17,61 @@ function Estatistica() {
             />
         </div>
     )
+} */
+
+
+class Estatistica extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            dados: null
+        }
+    }
+
+    componentDidMount() {
+        fetch("/dados/dades.json")
+            .then(response => response.json())
+            .then(data => {
+                this.setState({
+                    dados: data
+                });
+            })
+            .catch(error => {
+                console.error("Error fetching data:", error);
+            });
+    }
+
+    render() {
+        const { dados } = this.state;
+        return (
+            <div className="estatistica">
+                <div className="title">
+                    <h2>Estatísticas</h2>
+                    <div className="title">
+                        <img src="./img/icons8-edit.svg" alt="" />
+                        <img src="./img/icons8-plus.svg" alt="" />
+                    </div>
+                </div>
+                {dados === null ? (
+                    <div>Carregando...</div>
+                ) : (
+                    dados.map(item => {
+                        const sumMudanca = item.historico.reduce(
+                            (accumulator, entry) => accumulator + entry.mudanca,
+                            0
+                        );
+                        return (
+                            <EstatisticaBarra
+                                key={item.id}
+                                numCaixa={item.nome}
+                                porcentagem={(sumMudanca / item.capacidade) * 100}
+                            />
+                        );
+                    })
+                )}
+            </div>
+        );
+    }
 }
 
 function EstatisticaBarra(props) {
@@ -90,7 +145,6 @@ class ContainerHistorico extends React.Component {
 
     render() {
         const { historico, capacidade } = this.state
-        historico === null ? console.log('a') : console.log(historico)
         return (
             <div className="historico__container">
                 {historico === null ?
